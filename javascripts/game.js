@@ -46,5 +46,5 @@ function gameTick() {
 }
 
 function gameStart() {
-  gameInterval = setInterval(gameTick,100)
+  gameInterval = setInterval(gameTick,20)
 }
