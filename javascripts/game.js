@@ -37,7 +37,7 @@ function buyDL(tier) {
   player.DLBought[tier]++
   if (player.DLBought[tier] >= 10) player.DLCost[tier] = player.DLCost[tier].times(player.DLCostIncRate[tier])
   if (player.DLBought[tier] > 10) {
-    player.DLBoost = player.DLBoost.times(new Decimal(1.01))
+    player.DLBoost = player.DLBoost.times(new Decimal(1.02))
   }
   return true
 }
