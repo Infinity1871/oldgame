@@ -3,7 +3,8 @@ var player = {
   DLAmount: [null,new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0)],
   DLCost: [null,new Decimal(10),new Decimal(100),new Decimal(1e3),new Decimal(1e4)],
   DLBPS: [null,new Decimal(1),new Decimal(10),new Decimal(50),new Decimal(50)],
-  DLCostIncRate: [null,new Decimal(1),new Decimal(1),new Decimal(1),new Decimal(1)]
+  DLCostIncRate: [null,new Decimal(1),new Decimal(1),new Decimal(1),new Decimal(1)],
+  DLBought: [null,0,0,0,0]
 }
 
 function format(num,decimalPoints=0,offset=0,rounded=true) {
@@ -34,15 +35,19 @@ function buyDL(tier) {
   player.bugs = player.bugs.sub(player.DLCost[tier])
   player.DLAmount[tier] = player.DLAmount[tier].add(1)
   player.DLCost[tier] = player.DLCost[tier].times(player.DLCostIncRate[tier])
+  player.DLBought[tier]++
   return true
 }
 
 function gameTick() {
-  for (i=1;i<2;i++) {
-    document.getElementById("dl" + i.toString() + "Amount").innerHTML = format(player.DLAmount[i])
-    document.getElementById("dl" + i.toString() + "BPS").innerHTML = format(player.DLAmount[i].times(player.DLBPS[i]))
+  for (i=2;i<3;i++) {
+    player.DLAmount[i-1] = player.DLAmount[i-1].add(player.DLAmount[i].div(20))
+  }
+  for (i=1;i<3;i++) {
+    document.getElementById("dl" + i.toString() + "Amount").innerHTML = Decimal.floor(player.DLAmount[i]).eq(player.DLBought[i])?format(player.DLAmount[i]):format(player.DLAmount[i])+"("+player.DLBought[i].toString()+")"
+    document.getElementById("dl" + i.toString() + "BPS").innerHTML = format(Decimal.floor(player.DLAmount[i]).times(player.DLBPS[i]))
     document.getElementById("dl" + i.toString() + "Cost").innerHTML = format(player.DLCost[i])
-    player.bugs = player.bugs.add(player.DLAmount[i].times(player.DLBPS[i]).div(10))
+    player.bugs = player.bugs.add(Decimal.floor(player.DLAmount[i]).times(player.DLBPS[i]).div(10))
   }
   document.getElementById("bugs").innerHTML = format(player.bugs)
 }
