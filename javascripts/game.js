@@ -36,12 +36,15 @@ function buyDL(tier) {
   player.DLAmount[tier] = player.DLAmount[tier].add(1)
   player.DLBought[tier]++
   if (player.DLBought[tier] >= 10) player.DLCost[tier] = player.DLCost[tier].times(player.DLCostIncRate[tier])
+  if (player.DLBought[tier] > 10) {
+    player.DLBoost = player.DLBoost.times(new Decimal(1.01))
+  }
   return true
 }
 
 function gameTick() {
   for (i=1;i<5;i++) {
-    if (i>1) player.DLAmount[i-1] = player.DLAmount[i-1].add(player.DLAmount[i].div(20))
+    if (i>1) player.DLAmount[i-1] = player.DLAmount[i-1].add(player.DLAmount[i].mul(player.DLBoost).div(20))
     document.getElementById("dl" + i.toString() + "Amount").innerHTML = Decimal.floor(player.DLAmount[i]).eq(player.DLBought[i])?format(player.DLAmount[i]):format(player.DLAmount[i])+"("+player.DLBought[i].toString()+")"
     document.getElementById("dl" + i.toString() + "Cost").innerHTML = format(player.DLCost[i])
   }
