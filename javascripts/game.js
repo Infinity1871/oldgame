@@ -40,10 +40,10 @@ function buyDL(tier) {
 }
 
 function gameTick() {
-  for (i=2;i<3;i++) {
+  for (i=2;i<5;i++) {
     player.DLAmount[i-1] = player.DLAmount[i-1].add(player.DLAmount[i].div(20))
   }
-  for (i=1;i<3;i++) {
+  for (i=1;i<5;i++) {
     document.getElementById("dl" + i.toString() + "Amount").innerHTML = Decimal.floor(player.DLAmount[i]).eq(player.DLBought[i])?format(player.DLAmount[i]):format(player.DLAmount[i])+"("+player.DLBought[i].toString()+")"
     document.getElementById("dl" + i.toString() + "BPS").innerHTML = format(Decimal.floor(player.DLAmount[i]).times(player.DLBPS[i]))
     document.getElementById("dl" + i.toString() + "Cost").innerHTML = format(player.DLCost[i])
