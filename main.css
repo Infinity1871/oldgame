@@ -1,9 +1,7 @@
-#para1 {
+h1 {
   font: "Forced Square";
 }
 * {
   background-color:black;
   color:white;
-  font-family:Arial;
-  font-size:100%;
 }
