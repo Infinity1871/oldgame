@@ -17,7 +17,7 @@ const initPlayer = {
   CE: 0,
 }
 Object.freeze(initPlayer)
-var MFNames = [null,"Infomation Dialogues","Question Dialogues","Warning Dialogues","Error Generators","File Missing","MF6","MF7","MF8"]
+var MFNames = [null,"Bare Misfunction","Tiny Misfunction","Small Misfunction","Regular Misfunction","Large Misfunction","Huge Misfunction","Corrupted Files","Corrupted Programs"]
 
 function format(num,decimalPoints=0,offset=0,rounded=true) {
   num=new Decimal(num)
