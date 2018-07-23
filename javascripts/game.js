@@ -88,7 +88,7 @@ function gameTick() {
     target = getRandomInt(0,5)
     word = ["E","r","r","o","r"]
     word[target] = String.fromCharCode(getRandomInt(33,126))
-    document.getElementById("errorWord").innerHTML = word.join("")
+    document.getElementById("errorText").innerHTML = "500 Server " + word.join("") + "- "
   }
 }
 
