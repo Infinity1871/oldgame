@@ -46,10 +46,8 @@ function buyMF(tier) {
   player.bugs = player.bugs.sub(player.MFCost[tier])
   player.MFAmount[tier] = player.MFAmount[tier].add(1)
   player.MFBought[tier]++
-  if (player.MFBought[tier] >= 10) player.MFCost[tier] = player.MFCost[tier].times(player.MFCostIncRate[tier])
-  if (player.MFBought[tier] > 10) {
-    player.MFBoost = player.MFBoost.times(new Decimal(1.02))
-  }
+  if (player.MFBought[tier] % 10 == 0) player.MFCost[tier] = player.MFCost[tier].times(player.MFCostIncRate[tier])
+  if (player.MFBought[tier] > 10) player.MFBoost = player.MFBoost.times(new Decimal(1.02))
   return true
 }
 
