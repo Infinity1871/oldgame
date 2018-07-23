@@ -66,6 +66,12 @@ function doCE() {
   return true
 }
 
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+}
+
 function gameTick() {
   for (i=1;i<6;i++) {
     if (i>1) player.MFAmount[i-1] = player.MFAmount[i-1].add(player.MFAmount[i].mul(player.MFBoost).div(20))
@@ -78,6 +84,12 @@ function gameTick() {
   document.getElementById("bugs").innerHTML = format(player.bugs)
   document.getElementById("CEReq").innerHTML = "10 " + MFNames[player.CE+4] + " Bought"
   document.getElementById("CEUnlocks").innerHTML = MFNames[player.CE+5]
+  if (true) {
+    target = getRandomInt(0,5)
+    word = ["E","r","r","o","r"]
+    word[target] = String.fromCharCode(getRandomInt(33,126))
+    document.getElementById("errorWord").innerHTML = word.join("")
+  }
 }
 
 function gameStart() {
