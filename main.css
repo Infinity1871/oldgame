@@ -1,7 +1,15 @@
-h1 {
-  font: "Forced Square";
+@font-face {
+  font-family: ForcedSquare;
+  src: url("fonts/forced_square-webfont.eot");
+  src:
+    url("fonts/forced_square-webfont.svg") format("svg"),
+    url("fonts/forced_square-webfont.ttf") format("truetype"),
+    url("fonts/forced_square-webfont.woff") format("woff");
 }
 * {
   background-color:black;
   color:white;
+  font-family: ForcedSquare;
+  font-weight: normal;
+  font-style: normal;
 }
