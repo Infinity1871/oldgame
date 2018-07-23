@@ -15,7 +15,7 @@ const initPlayer = {
   MFCostIncRate: [null,new Decimal(1e4),new Decimal(1e4),new Decimal(1e5),new Decimal(1e6),new Decimal(1e6),new Decimal(1e7),new Decimal(1e7),new Decimal(1e8)],
   MFBought: [null,0,0,0,0,0,0,0,0],
   CE: 0,
-}
+} 
 Object.freeze(initPlayer)
 var MFNames = [null,"Bare Misfunction","Tiny Misfunction","Small Misfunction","Regular Misfunction","Large Misfunction","Huge Misfunction","Corrupted Files","Corrupted Programs"]
 
