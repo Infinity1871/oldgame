@@ -73,7 +73,7 @@ function getRandomInt(min, max) {
 }
 
 function gameTick() {
-  for (i=1;i<6;i++) {
+  for (i=1;i<9;i++) {
     if (i>1) player.MFAmount[i-1] = player.MFAmount[i-1].add(player.MFAmount[i].mul(player.MFBoost).div(20))
     document.getElementById("mf" + i.toString() + "Amount").innerHTML = Decimal.floor(player.MFAmount[i]).eq(player.MFBought[i])?format(player.MFAmount[i]):format(player.MFAmount[i])+"("+player.MFBought[i].toString()+")"
     document.getElementById("mf" + i.toString() + "Cost").innerHTML = format(player.MFCost[i])
@@ -82,6 +82,8 @@ function gameTick() {
   document.getElementById("mf1BPS").innerHTML = format(Decimal.floor(player.MFAmount[1]).times(player.MFBoost))
   player.bugs = player.bugs.add(Decimal.floor(player.MFAmount[1]).times(player.MFBoost).div(10))
   document.getElementById("bugs").innerHTML = format(player.bugs)
+  if (player.CE == 4) document.getElementById("CE").style = "display: none"
+  else document.getElementById("CE").style = "display: block"
   document.getElementById("CEReq").innerHTML = "10 " + MFNames[player.CE+4] + " Bought"
   document.getElementById("CEUnlocks").innerHTML = MFNames[player.CE+5]
   if (player.MFBought[8] >= 40 || true) {
