@@ -1,22 +1,23 @@
 var player = {
   bugs: new Decimal(10),
-  MFAmount: [null,new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0)],
-  MFCost: [null,new Decimal(10),new Decimal(100),new Decimal(1e3),new Decimal(1e4),new Decimal(1e5)],
+  MFAmount: [null,new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0)],
+  MFCost: [null,new Decimal(10),new Decimal(100),new Decimal(1e3),new Decimal(1e4),new Decimal(1e5),new Decimal(1e6),new Decimal(1e7),new Decimal(1e8)],
   MFBoost: new Decimal(1),
-  MFCostIncRate: [null,new Decimal(1e4),new Decimal(1e4),new Decimal(1e5),new Decimal(1e6),new Decimal(1e6)],
-  MFBought: [null,0,0,0,0,0],
+  MFCostIncRate: [null,new Decimal(1e4),new Decimal(1e4),new Decimal(1e5),new Decimal(1e6),new Decimal(1e6),new Decimal(1e7),new Decimal(1e7),new Decimal(1e8)],
+  MFBought: [null,0,0,0,0,0,0,0,0],
   CE: 0,
 }
-var initPlayer = {
+const initPlayer = {
   bugs: new Decimal(10),
-  MFAmount: [null,new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0)],
-  MFCost: [null,new Decimal(10),new Decimal(100),new Decimal(1e3),new Decimal(1e4),new Decimal(1e5)],
+  MFAmount: [null,new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0)],
+  MFCost: [null,new Decimal(10),new Decimal(100),new Decimal(1e3),new Decimal(1e4),new Decimal(1e5),new Decimal(1e6),new Decimal(1e7),new Decimal(1e8)],
   MFBoost: new Decimal(1),
-  MFCostIncRate: [null,new Decimal(1e4),new Decimal(1e4),new Decimal(1e5),new Decimal(1e6),new Decimal(1e6)],
-  MFBought: [null,0,0,0,0,0],
+  MFCostIncRate: [null,new Decimal(1e4),new Decimal(1e4),new Decimal(1e5),new Decimal(1e6),new Decimal(1e6),new Decimal(1e7),new Decimal(1e7),new Decimal(1e8)],
+  MFBought: [null,0,0,0,0,0,0,0,0],
   CE: 0,
-} // Best way of copying object lol
-var MFNames = [null,"Infomation Dialogues","Question Dialogues","Warning Dialogues","Error Generators","File Missing","???"]
+}
+Object.freeze(initPlayer)
+var MFNames = [null,"Infomation Dialogues","Question Dialogues","Warning Dialogues","Error Generators","File Missing","MF6","MF7","MF8"]
 
 function format(num,decimalPoints=0,offset=0,rounded=true) {
   num=new Decimal(num)
@@ -52,16 +53,16 @@ function buyMF(tier) {
 }
 
 function doCE() {
-  if (player.CE >= 1 || player.MFBought[player.CE+4] < 10) return false
-  player.CE++
-  reset(["bugs","MFAmount","MFCost","MFBoost","MFBought"])
-  return true
-}
-
-function reset(keys) {
-  keys.forEach(function(key) {
-    player[key] = initPlayer[key]
-  })
+  if (player.CE >= 4 || player.MFBought[player.CE+4] < 10) return false
+  player = {
+    bugs: new Decimal(10),
+    MFAmount: [null,new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0)],
+    MFCost: [null,new Decimal(10),new Decimal(100),new Decimal(1e3),new Decimal(1e4),new Decimal(1e5),new Decimal(1e6),new Decimal(1e7),new Decimal(1e8)],
+    MFBoost: new Decimal(1),
+    MFCostIncRate: player.MFCostIncRate,
+    MFBought: [null,0,0,0,0,0,0,0,0],
+    CE: player.CE+1,
+  }
   return true
 }
 
@@ -70,7 +71,7 @@ function gameTick() {
     if (i>1) player.MFAmount[i-1] = player.MFAmount[i-1].add(player.MFAmount[i].mul(player.MFBoost).div(20))
     document.getElementById("mf" + i.toString() + "Amount").innerHTML = Decimal.floor(player.MFAmount[i]).eq(player.MFBought[i])?format(player.MFAmount[i]):format(player.MFAmount[i])+"("+player.MFBought[i].toString()+")"
     document.getElementById("mf" + i.toString() + "Cost").innerHTML = format(player.MFCost[i])
-    if (i<5-3) document.getElementById("mf" + (i+4).toString()).style = "display: " + (player.CE>=i?"inline-block":"none")
+    if (i<5) document.getElementById("mf" + (i+4).toString()).style = "display: " + (player.CE>=i?"block":"none")
   }
   document.getElementById("mf1BPS").innerHTML = format(Decimal.floor(player.MFAmount[1]).times(player.MFBoost))
   player.bugs = player.bugs.add(Decimal.floor(player.MFAmount[1]).times(player.MFBoost).div(10))
