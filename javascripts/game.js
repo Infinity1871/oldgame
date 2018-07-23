@@ -84,11 +84,16 @@ function gameTick() {
   document.getElementById("bugs").innerHTML = format(player.bugs)
   document.getElementById("CEReq").innerHTML = "10 " + MFNames[player.CE+4] + " Bought"
   document.getElementById("CEUnlocks").innerHTML = MFNames[player.CE+5]
-  if (true) {
+  if (player.MFBought[8] >= 40 || true) {
     target = getRandomInt(0,5)
+    target2 = getRandomInt(0,5)
+    while (target2 == target) {
+      target2 = getRandomInt(0,5)
+    }
     word = ["E","r","r","o","r"]
     word[target] = String.fromCharCode(getRandomInt(33,126))
-    document.getElementById("errorText").innerHTML = "500 Server " + word.join("") + "- "
+    word[target2] = String.fromCharCode(getRandomInt(33,126))
+    document.getElementById("errorText").innerHTML = "500 Server " + word.join("")
   }
 }
 
