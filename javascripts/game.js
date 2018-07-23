@@ -2,7 +2,7 @@ var player = {
   bugs: new Decimal(10),
   MFAmount: [null,new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0)],
   MFCost: [null,new Decimal(10),new Decimal(2e2),new Decimal(2e4),new Decimal(2e6),new Decimal(2e8),new Decimal(2e10),new Decimal(2e12),new Decimal(2e14)],
-  MFBoost: new Decimal(1),
+  MFBoost: [null,new Decimal(1),new Decimal(1),new Decimal(1),new Decimal(1),new Decimal(1),new Decimal(1),new Decimal(1),new Decimal(1)],
   MFCostIncRate: [null,new Decimal(1e4),new Decimal(1e4),new Decimal(1e5),new Decimal(1e6),new Decimal(1e6),new Decimal(1e7),new Decimal(1e7),new Decimal(1e8)],
   MFBought: [null,0,0,0,0,0,0,0,0],
   CE: 0,
@@ -39,9 +39,8 @@ function buyMF(tier) {
   player.MFBought[tier]++
   if (player.MFBought[tier] % 10 == 0) {
     player.MFCost[tier] = player.MFCost[tier].times(player.MFCostIncRate[tier])
-    player.MFBoost = player.MFBoost.times(new Decimal(1.5))
+    player.MFBoost[tier] = player.MFBoost[tier].times(new Decimal(2))
   }
-  if (player.MFBought[tier] > 10) player.MFBoost = player.MFBoost.times(new Decimal(1.01))
   return true
 }
 
@@ -51,7 +50,7 @@ function doCE() {
     bugs: new Decimal(10),
     MFAmount: [null,new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0)],
     MFCost: [null,new Decimal(10),new Decimal(2e2),new Decimal(2e4),new Decimal(2e6),new Decimal(2e8),new Decimal(2e10),new Decimal(2e12),new Decimal(2e14)],
-    MFBoost: new Decimal(1),
+    MFBoost: [null,new Decimal(1),new Decimal(1),new Decimal(1),new Decimal(1),new Decimal(1),new Decimal(1),new Decimal(1),new Decimal(1)],
     MFCostIncRate: player.MFCostIncRate,
     MFBought: [null,0,0,0,0,0,0,0,0],
     CE: player.CE+1,
@@ -67,13 +66,13 @@ function getRandomInt(min, max) {
 
 function gameTick() {
   for (i=1;i<9;i++) {
-    if (i>1) player.MFAmount[i-1] = player.MFAmount[i-1].add(player.MFAmount[i].mul(player.MFBoost).mul(player.CE >= i?2:1).div(20))
+    if (i>1) player.MFAmount[i-1] = player.MFAmount[i-1].add(player.MFAmount[i].mul(player.MFBoost[i]).mul(player.CE >= i?2:1).div(20))
     document.getElementById("mf" + i.toString() + "Amount").innerHTML = Decimal.floor(player.MFAmount[i]).eq(player.MFBought[i])?format(player.MFAmount[i]):format(player.MFAmount[i])+"("+player.MFBought[i].toString()+")"
     document.getElementById("mf" + i.toString() + "Cost").innerHTML = format(player.MFCost[i])
     if (i<5) document.getElementById("mf" + (i+4).toString()).style = "display: " + (player.CE>=i?"block":"none")
   }
-  document.getElementById("mf1BPS").innerHTML = format(Decimal.floor(player.MFAmount[1]).times(player.MFBoost).times(player.CE >= 1?2:1))
-  player.bugs = player.bugs.add(Decimal.floor(player.MFAmount[1]).times(player.MFBoost).times(player.CE >= 1?2:1).div(10))
+  document.getElementById("mf1BPS").innerHTML = format(Decimal.floor(player.MFAmount[1]).times(player.MFBoost[1]).times(player.CE >= 1?2:1))
+  player.bugs = player.bugs.add(Decimal.floor(player.MFAmount[1]).times(player.MFBoost[1]).times(player.CE >= 1?2:1).div(10))
   document.getElementById("bugs").innerHTML = format(player.bugs)
   if (player.CE == 4) document.getElementById("CE").style = "display: none"
   else document.getElementById("CE").style = "display: block"
