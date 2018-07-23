@@ -67,13 +67,13 @@ function getRandomInt(min, max) {
 
 function gameTick() {
   for (i=1;i<9;i++) {
-    if (i>1) player.MFAmount[i-1] = player.MFAmount[i-1].add(player.MFAmount[i].mul(player.MFBoost).div(20))
+    if (i>1) player.MFAmount[i-1] = player.MFAmount[i-1].add(player.MFAmount[i].mul(player.MFBoost).mul(player.CE >= i?2:1).div(20))
     document.getElementById("mf" + i.toString() + "Amount").innerHTML = Decimal.floor(player.MFAmount[i]).eq(player.MFBought[i])?format(player.MFAmount[i]):format(player.MFAmount[i])+"("+player.MFBought[i].toString()+")"
     document.getElementById("mf" + i.toString() + "Cost").innerHTML = format(player.MFCost[i])
     if (i<5) document.getElementById("mf" + (i+4).toString()).style = "display: " + (player.CE>=i?"block":"none")
   }
-  document.getElementById("mf1BPS").innerHTML = format(Decimal.floor(player.MFAmount[1]).times(player.MFBoost))
-  player.bugs = player.bugs.add(Decimal.floor(player.MFAmount[1]).times(player.MFBoost).div(10))
+  document.getElementById("mf1BPS").innerHTML = format(Decimal.floor(player.MFAmount[1]).times(player.MFBoost).times(player.CE >= 1?2:1))
+  player.bugs = player.bugs.add(Decimal.floor(player.MFAmount[1]).times(player.MFBoost).times(player.CE >= 1?2:1).div(10))
   document.getElementById("bugs").innerHTML = format(player.bugs)
   if (player.CE == 4) document.getElementById("CE").style = "display: none"
   else document.getElementById("CE").style = "display: block"
