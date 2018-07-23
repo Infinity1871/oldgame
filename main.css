@@ -4,3 +4,7 @@
   object-position: left bottom;
   background = black;
 }
+* {
+  background-color:black;
+  color:white;
+}
