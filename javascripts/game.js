@@ -1,11 +1,22 @@
 var player = {
   bugs: new Decimal(10),
-  MFAmount: [null,new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0)],
-  MFCost: [null,new Decimal(10),new Decimal(100),new Decimal(1e3),new Decimal(1e4)],
+  MFAmount: [null,new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0)],
+  MFCost: [null,new Decimal(10),new Decimal(100),new Decimal(1e3),new Decimal(1e4),new Decimal(1e5)],
   MFBoost: new Decimal(1),
-  MFCostIncRate: [null,new Decimal(1e4),new Decimal(1e4),new Decimal(1e5),new Decimal(1e6)],
-  MFBought: [null,0,0,0,0]
+  MFCostIncRate: [null,new Decimal(1e4),new Decimal(1e4),new Decimal(1e5),new Decimal(1e6),new Decimal(1e6)],
+  MFBought: [null,0,0,0,0,0],
+  CE: 0,
 }
+var initPlayer = {
+  bugs: new Decimal(10),
+  MFAmount: [null,new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0)],
+  MFCost: [null,new Decimal(10),new Decimal(100),new Decimal(1e3),new Decimal(1e4),new Decimal(1e5)],
+  MFBoost: new Decimal(1),
+  MFCostIncRate: [null,new Decimal(1e4),new Decimal(1e4),new Decimal(1e5),new Decimal(1e6),new Decimal(1e6)],
+  MFBought: [null,0,0,0,0,0],
+  CE: 0,
+} // Best way of copying object lol
+var MFNames = [null,"Infomation Dialogues","Question Dialogues","Warning Dialogues","Error Generators","File Missing","???"]
 
 function format(num,decimalPoints=0,offset=0,rounded=true) {
   num=new Decimal(num)
@@ -42,15 +53,32 @@ function buyMF(tier) {
   return true
 }
 
+function doCE() {
+  if (player.CE >= 1 || player.MFBought[player.CE+4] < 10) return false
+  player.CE++
+  reset(["bugs","MFAmount","MFCost","MFBoost","MFBought"])
+  return true
+}
+
+function reset(keys) {
+  keys.forEach(function(key) {
+    player[key] = initPlayer[key]
+  })
+  return true
+}
+
 function gameTick() {
-  for (i=1;i<5;i++) {
+  for (i=1;i<6;i++) {
     if (i>1) player.MFAmount[i-1] = player.MFAmount[i-1].add(player.MFAmount[i].mul(player.MFBoost).div(20))
     document.getElementById("mf" + i.toString() + "Amount").innerHTML = Decimal.floor(player.MFAmount[i]).eq(player.MFBought[i])?format(player.MFAmount[i]):format(player.MFAmount[i])+"("+player.MFBought[i].toString()+")"
     document.getElementById("mf" + i.toString() + "Cost").innerHTML = format(player.MFCost[i])
+    if (i<5-3) document.getElementById("mf" + (i+4).toString()).style = "display: " + (player.CE>=i?"inline-block":"none")
   }
   document.getElementById("mf1BPS").innerHTML = format(Decimal.floor(player.MFAmount[1]).times(player.MFBoost))
   player.bugs = player.bugs.add(Decimal.floor(player.MFAmount[1]).times(player.MFBoost).div(10))
   document.getElementById("bugs").innerHTML = format(player.bugs)
+  document.getElementById("CEReq").innerHTML = "10 " + MFNames[player.CE+4] + " Bought"
+  document.getElementById("CEUnlocks").innerHTML = MFNames[player.CE+5]
 }
 
 function gameStart() {
