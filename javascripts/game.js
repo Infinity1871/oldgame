@@ -47,10 +47,10 @@ function buyMF(tier) {
 
 function doCE() {
   if (player.CE >= 4 || player.MFBought[player.CE+4] < 10) return false
-  player = {
+  player = { // WET 1
     bugs: new Decimal(10),
     MFAmount: [null,new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0)],
-    MFCost: [null,new Decimal(10),new Decimal(100),new Decimal(1e3),new Decimal(1e4),new Decimal(1e5),new Decimal(1e6),new Decimal(1e7),new Decimal(1e8)],
+    MFCost: [null,new Decimal(10),new Decimal(2e2),new Decimal(2e4),new Decimal(2e6),new Decimal(2e8),new Decimal(2e10),new Decimal(2e12),new Decimal(2e14)],
     MFBoost: new Decimal(1),
     MFCostIncRate: player.MFCostIncRate,
     MFBought: [null,0,0,0,0,0,0,0,0],
