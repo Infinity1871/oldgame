@@ -1,11 +1,6 @@
-#rectangle {
-  width = 1920px;
-  height = 100px;
-  object-position: left bottom;
-  background = black;
-}
+#para1 {
+  font: FORCED SQUARE.ttf;
 * {
   background-color:black;
   color:white;
-  font:Forced Square;
 }
