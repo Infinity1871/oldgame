@@ -1,22 +1,12 @@
 var player = {
   bugs: new Decimal(10),
   MFAmount: [null,new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0)],
-  MFCost: [null,new Decimal(10),new Decimal(100),new Decimal(1e3),new Decimal(1e4),new Decimal(1e5),new Decimal(1e6),new Decimal(1e7),new Decimal(1e8)],
+  MFCost: [null,new Decimal(10),new Decimal(2e2),new Decimal(2e4),new Decimal(2e6),new Decimal(2e8),new Decimal(2e10),new Decimal(2e12),new Decimal(2e14)],
   MFBoost: new Decimal(1),
   MFCostIncRate: [null,new Decimal(1e4),new Decimal(1e4),new Decimal(1e5),new Decimal(1e6),new Decimal(1e6),new Decimal(1e7),new Decimal(1e7),new Decimal(1e8)],
   MFBought: [null,0,0,0,0,0,0,0,0],
   CE: 0,
 }
-const initPlayer = {
-  bugs: new Decimal(10),
-  MFAmount: [null,new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0)],
-  MFCost: [null,new Decimal(10),new Decimal(100),new Decimal(1e3),new Decimal(1e4),new Decimal(1e5),new Decimal(1e6),new Decimal(1e7),new Decimal(1e8)],
-  MFBoost: new Decimal(1),
-  MFCostIncRate: [null,new Decimal(1e4),new Decimal(1e4),new Decimal(1e5),new Decimal(1e6),new Decimal(1e6),new Decimal(1e7),new Decimal(1e7),new Decimal(1e8)],
-  MFBought: [null,0,0,0,0,0,0,0,0],
-  CE: 0,
-}
-Object.freeze(initPlayer)
 var MFNames = [null,"Bare Misfunction","Tiny Misfunction","Small Misfunction","Regular Misfunction","Large Misfunction","Huge Misfunction","Corrupted Files","Corrupted Programs"]
 
 function format(num,decimalPoints=0,offset=0,rounded=true) {
@@ -47,8 +37,11 @@ function buyMF(tier) {
   player.bugs = player.bugs.sub(player.MFCost[tier])
   player.MFAmount[tier] = player.MFAmount[tier].add(1)
   player.MFBought[tier]++
-  if (player.MFBought[tier] % 10 == 0) player.MFCost[tier] = player.MFCost[tier].times(player.MFCostIncRate[tier])
-  if (player.MFBought[tier] > 10) player.MFBoost = player.MFBoost.times(new Decimal(1.02))
+  if (player.MFBought[tier] % 10 == 0) {
+    player.MFCost[tier] = player.MFCost[tier].times(player.MFCostIncRate[tier])
+    player.MFBoost = player.MFBoost.times(new Decimal(1.5))
+  }
+  if (player.MFBought[tier] > 10) player.MFBoost = player.MFBoost.times(new Decimal(1.01))
   return true
 }
 
@@ -74,19 +67,19 @@ function getRandomInt(min, max) {
 
 function gameTick() {
   for (i=1;i<9;i++) {
-    if (i>1) player.MFAmount[i-1] = player.MFAmount[i-1].add(player.MFAmount[i].mul(player.MFBoost).div(20))
+    if (i>1) player.MFAmount[i-1] = player.MFAmount[i-1].add(player.MFAmount[i].mul(player.MFBoost).mul(player.CE >= i?2:1).div(20))
     document.getElementById("mf" + i.toString() + "Amount").innerHTML = Decimal.floor(player.MFAmount[i]).eq(player.MFBought[i])?format(player.MFAmount[i]):format(player.MFAmount[i])+"("+player.MFBought[i].toString()+")"
     document.getElementById("mf" + i.toString() + "Cost").innerHTML = format(player.MFCost[i])
     if (i<5) document.getElementById("mf" + (i+4).toString()).style = "display: " + (player.CE>=i?"block":"none")
   }
-  document.getElementById("mf1BPS").innerHTML = format(Decimal.floor(player.MFAmount[1]).times(player.MFBoost))
-  player.bugs = player.bugs.add(Decimal.floor(player.MFAmount[1]).times(player.MFBoost).div(10))
+  document.getElementById("mf1BPS").innerHTML = format(Decimal.floor(player.MFAmount[1]).times(player.MFBoost).times(player.CE >= 1?2:1))
+  player.bugs = player.bugs.add(Decimal.floor(player.MFAmount[1]).times(player.MFBoost).times(player.CE >= 1?2:1).div(10))
   document.getElementById("bugs").innerHTML = format(player.bugs)
   if (player.CE == 4) document.getElementById("CE").style = "display: none"
   else document.getElementById("CE").style = "display: block"
   document.getElementById("CEReq").innerHTML = "10 " + MFNames[player.CE+4] + " Bought"
   document.getElementById("CEUnlocks").innerHTML = MFNames[player.CE+5]
-  if (player.MFBought[8] >= 40 || true) {
+  if (player.MFBought[8] >= 40) {
     target = getRandomInt(0,6)
     target2 = getRandomInt(0,6)
     while (target2 == target) {
@@ -100,5 +93,5 @@ function gameTick() {
 }
 
 function gameStart() {
-  gameInterval = setInterval(gameTick,20)
+  gameInterval = setInterval(gameTick,100)
 }
