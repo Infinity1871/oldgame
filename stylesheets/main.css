@@ -1,5 +1,6 @@
 #rectangle {
-  width = 100%;
-  height = 10%;
+  width = 1920px;
+  height = 100px;
+  object-position: left bottom;
   background = black;
 }
