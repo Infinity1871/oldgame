@@ -43,5 +43,8 @@ h1 {
   font-weight: normal;
   font-style: normal;
   font-size: 66.6px;
-  padding: 0px;
+  padding-left: 20px;
+}
+p {
+  padding-left: 20px;
 }
