@@ -6,6 +6,7 @@
        url("fonts/asgalt-regular-webfont.woff") format("woff")
        url("fonts/asgalt-regular-webfont.ttf") format("truetype")
        url("fonts/asgalt-regular-webfont.svg#asgaltregular")
+}
 * {
   background-color: black;
   color: white;
