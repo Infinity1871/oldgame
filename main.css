@@ -45,13 +45,27 @@ h1 {
   font-size: 66.6px;
   padding-left: 20px;
 }
-#mf1,
-#mf2,
-#mf3,
-#mf4,
-#mf5,
-#mf6,
-#mf7,
 #mf8 {
+  padding-left: 20px;
+}
+#mf7 {
+  padding-left: 20px;
+}
+#mf6 {
+  padding-left: 20px;
+}
+#mf5 {
+  padding-left: 20px;
+}
+#mf4 {
+  padding-left: 20px;
+}
+#mf3 {
+  padding-left: 20px;
+}
+#mf2 {
+  padding-left: 20px;
+}
+#mf1 {
   padding-left: 20px;
 }
