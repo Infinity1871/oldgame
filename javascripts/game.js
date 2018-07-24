@@ -119,7 +119,7 @@ function buy10(tier) {
 function maxAll() {
   do {
     boughtSmth = false
-    for (i=8;i>0;i--) {
+    for (i=4+player.CE;i>0;i--) {
       boughtSmth = boughtSmth || buy10(i)
     }
   } while (boughtSmth)
