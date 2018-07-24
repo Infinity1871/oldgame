@@ -10,10 +10,10 @@
 <body onload="gameStart()">
 <h1>ERROR LOADING TITLE</h1>
 <p>You have <span id="bugs">10</span> Bug(s) <button onclick="maxAll()">Max all</button></p>
-  <p>Buy Bare Misfunction (you have <span id="mf1Amount">0</span> of them, making <span id="mf1BPS">0</span> bug(s) per second)- <button onclick="buyMF(1)" style="display: inline-block;"><span id="mf1Cost" class="cost"></span> Bugs</button><button onclick=buy10(1)>Buy till 10: <span id="mf1Cost2" class="cost"></span> Bugs</button></p>
-<p>Buy Tiny Misfunction (you have <span id="mf2Amount">0</span> of them)- <button onclick="buyMF(2)" style="display: inline-block;"><span id="mf2Cost" class="cost"></span> Bugs</button><button onclick=buy10(2)>Buy till 10: <span id="mf2Cost2" class="cost"></span> Bugs</button></p>
-<p>Buy Small Misfunction (you have <span id="mf3Amount">0</span> of them)- <button onclick="buyMF(3)" style="display: inline-block;"><span id="mf3Cost" class="cost"></span> Bugs</button><button onclick=buy10(3)>Buy till 10: <span id="mf3Cost2" class="cost"></span> Bugs</button></p>
-<p>Buy Regular Misfunction (you have <span id="mf4Amount">0</span> of them)- <button onclick="buyMF(4)" style="display: inline-block;"><span id="mf4Cost" class="cost"></span> Bugs</button><button onclick=buy10(4)>Buy till 10: <span id="mf4Cost2" class="cost"></span> Bugs</button></p>
+  <p id="mf1">Buy Bare Misfunction (you have <span id="mf1Amount">0</span> of them, making <span id="mf1BPS">0</span> bug(s) per second)- <button onclick="buyMF(1)" style="display: inline-block;"><span id="mf1Cost" class="cost"></span> Bugs</button><button onclick=buy10(1)>Buy till 10: <span id="mf1Cost2" class="cost"></span> Bugs</button></p>
+<p id="mf2">Buy Tiny Misfunction (you have <span id="mf2Amount">0</span> of them)- <button onclick="buyMF(2)" style="display: inline-block;"><span id="mf2Cost" class="cost"></span> Bugs</button><button onclick=buy10(2)>Buy till 10: <span id="mf2Cost2" class="cost"></span> Bugs</button></p>
+<p id="mf3">Buy Small Misfunction (you have <span id="mf3Amount">0</span> of them)- <button onclick="buyMF(3)" style="display: inline-block;"><span id="mf3Cost" class="cost"></span> Bugs</button><button onclick=buy10(3)>Buy till 10: <span id="mf3Cost2" class="cost"></span> Bugs</button></p>
+<p id="mf4">Buy Regular Misfunction (you have <span id="mf4Amount">0</span> of them)- <button onclick="buyMF(4)" style="display: inline-block;"><span id="mf4Cost" class="cost"></span> Bugs</button><button onclick=buy10(4)>Buy till 10: <span id="mf4Cost2" class="cost"></span> Bugs</button></p>
 <div id="mf5" style="display: none">Buy Large Misfunctions (you have <span id="mf5Amount">0</span> of them)- <button onclick="buyMF(5)" style="display: inline-block;"><span id="mf5Cost" class="cost"></span> Bugs</button><button onclick=buy10(5)>Buy till 10: <span id="mf5Cost2" class="cost"></span> Bugs</button></div>
 <br>
 <div id="mf6" style="display: none">Buy Huge Misfunctions (you have <span id="mf6Amount">0</span> of them)- <button onclick="buyMF(6)" style="display: inline-block;"><span id="mf6Cost" class="cost"></span> Bugs</button><button onclick=buy10(6)>Buy until 10: <span id="mf6Cost2" class="cost"></span> Bugs</button></div>
@@ -30,7 +30,7 @@
 <div id="errorText">500 Server Error</div>
 <button id="SEReq" onclick="">30 Corrupted Programs Bought</button>
 <p>Reset all items and Critical Errors, but doubles production</p>
-<button onclick="hardReset()">HARD RESET!</button>
+<button id="reset" onclick="hardReset()">HARD RESET!</button>
 
 </body>
 </html>
