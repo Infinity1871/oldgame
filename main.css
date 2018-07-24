@@ -7,8 +7,8 @@
     url("fonts/forced_square-webfont.woff") format("woff");
 }
 * {
-  background-color:black;
-  color:blue;
+  background-color:blue;
+  color:black;
   font-family: ForcedSquare;
   font-weight: normal;
   font-style: normal;
