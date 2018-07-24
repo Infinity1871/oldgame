@@ -1,12 +1,3 @@
-var player = {
-  bugs: new Decimal(10),
-  MFAmount: [null,new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0)],
-  MFCost: [null,new Decimal(10),new Decimal(2e2),new Decimal(2e4),new Decimal(2e6),new Decimal(2e8),new Decimal(2e10),new Decimal(2e12),new Decimal(2e14)],
-  MFBoost: [null,new Decimal(1),new Decimal(1),new Decimal(1),new Decimal(1),new Decimal(1),new Decimal(1),new Decimal(1),new Decimal(1)],
-  MFCostIncRate: [null,new Decimal(1e4),new Decimal(1e4),new Decimal(1e5),new Decimal(1e6),new Decimal(1e6),new Decimal(1e7),new Decimal(1e7),new Decimal(1e8)],
-  MFBought: [null,0,0,0,0,0,0,0,0],
-  CE: 0,
-}
 var MFNames = [null,"Bare Misfunction","Tiny Misfunction","Small Misfunction","Regular Misfunction","Large Misfunction","Huge Misfunction","Corrupted Files","Corrupted Programs"]
 
 function format(num,decimalPoints=0,offset=0,rounded=true) {
@@ -46,15 +37,8 @@ function buyMF(tier) {
 
 function doCE() {
   if (player.CE >= 4 || player.MFBought[player.CE+4] < 10) return false
-  player = { // WET 1
-    bugs: new Decimal(10),
-    MFAmount: [null,new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0)],
-    MFCost: [null,new Decimal(10),new Decimal(2e2),new Decimal(2e4),new Decimal(2e6),new Decimal(2e8),new Decimal(2e10),new Decimal(2e12),new Decimal(2e14)],
-    MFBoost: [null,new Decimal(1),new Decimal(1),new Decimal(1),new Decimal(1),new Decimal(1),new Decimal(1),new Decimal(1),new Decimal(1)],
-    MFCostIncRate: player.MFCostIncRate,
-    MFBought: [null,0,0,0,0,0,0,0,0],
-    CE: player.CE+1,
-  }
+  reset(["bugs","MFAmount","MFCost","MFBoost","MFBought"])
+  player.CE++
   return true
 }
 
@@ -62,6 +46,58 @@ function getRandomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+}
+
+function hardReset() {
+  if (confirm("ARE YOU SURE YOU WANNA RESET ENTIRE GAME???")) {
+    player = getInitPlayer()
+    save()
+    location.reload()
+  }
+}
+
+function save() {
+  localStorage.setItem('saveFile',btoa(JSON.stringify(player)))
+}
+
+function load() {
+  try {
+    player = strToDec(JSON.parse(atob(localStorage.getItem("saveFile"))))
+  } catch(error) {
+    player = getInitPlayer()
+  }
+}
+
+function strToDec(inp) {
+  inp.bugs = new Decimal(inp.bugs)
+  for (i=1;i<9;i++) {
+    inp.MFAmount[i] = new Decimal(inp.MFAmount[i])
+    inp.MFCost[i] = new Decimal(inp.MFCost[i])
+    inp.MFBoost[i] = new Decimal(inp.MFBoost[i])
+    inp.MFCostIncRate[i] = new Decimal(inp.MFCostIncRate[i])
+  }
+  return inp
+}
+
+function reset(keys) {
+  temp = getInitPlayer()
+  keys.forEach(function(key) {
+    player[key] = temp[key]
+  })
+}
+
+function getInitPlayer() {
+  var initPlayer = {
+    bugs: new Decimal(10),
+    MFAmount: [null,new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0),new Decimal(0)],
+    MFCost: [null,new Decimal(10),new Decimal(2e2),new Decimal(2e4),new Decimal(2e6),new Decimal(2e8),new Decimal(2e10),new Decimal(2e12),new Decimal(2e14)],
+    MFBoost: [null,new Decimal(1),new Decimal(1),new Decimal(1),new Decimal(1),new Decimal(1),new Decimal(1),new Decimal(1),new Decimal(1)],
+    MFCostIncRate: [null,new Decimal(1e4),new Decimal(1e4),new Decimal(1e5),new Decimal(1e6),new Decimal(1e6),new Decimal(1e7),new Decimal(1e7),new Decimal(1e8)],
+    MFBought: [null,0,0,0,0,0,0,0,0],
+    CE: 0,
+    version: 1
+  }
+  return strToDec(JSON.parse(JSON.stringify(initPlayer)))
 }
 
 function gameTick() {
@@ -92,5 +128,7 @@ function gameTick() {
 }
 
 function gameStart() {
+  load()
   gameInterval = setInterval(gameTick,100)
+  autoSave = setInterval(save,1000)
 }
