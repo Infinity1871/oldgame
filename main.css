@@ -14,7 +14,7 @@
        url("fonts/roboto-regular-webfont.woff2") format("woff2"),
        url("fonts/roboto-regular-webfont.woff") format("woff"),
        url("fonts/roboto-regular-webfont.ttf") format("truetype"),
-       url("fonts/roboto-regular-webfont.svg#robotoregular");
+       url("fonts/roboto-regular-webfont.svg#robotoregular") format("svg");
 }
 * {
   background-color: black;
