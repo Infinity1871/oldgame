@@ -21,6 +21,7 @@ button {
     text-align: center;
     text-decoration: none;
     font-size: 16px;
+    margin: 5px;
 }   
 .cost {
     background-color: lightgray;
