@@ -127,7 +127,7 @@ function maxAll() {
 
 function gameTick() {
   if (player.time > 0) {
-    s=(new Date().getTime()-player.time)/500
+    s=(new Date().getTime()-player.time)/1000
     for (i=1;i<9;i++) {
       if (i>1) player.MFAmount[i-1] = player.MFAmount[i-1].add(player.MFAmount[i].mul(player.MFBoost[i]).mul(player.CE >= i?2:1).div(2).times(s))
       document.getElementById("mf" + i.toString() + "Amount").innerHTML = Decimal.floor(player.MFAmount[i]).eq(player.MFBought[i])?format(player.MFAmount[i]):format(player.MFAmount[i])+"("+(player.MFBought[i] % 10).toString()+")"
