@@ -116,6 +116,15 @@ function buy10(tier) {
   return true
 }
 
+function maxAll() {
+  do {
+    boughtSmth = false
+    for (i=8;i>0;i--) {
+      boughtSmth = boughtSmth || buy10(i)
+    }
+  } while (boughtSmth)
+}
+
 function gameTick() {
   if (player.time > 0) {
     s=(new Date().getTime()-player.time)/1000
