@@ -142,7 +142,7 @@ function gameTick() {
     else document.getElementById("CE").style = "display: block"
     document.getElementById("CEReq").innerHTML = "10 " + MFNames[player.CE+4] + " Bought"
     document.getElementById("CEUnlocks").innerHTML = MFNames[player.CE+5]
-    if (player.MFBought[8] >= 40) {
+    if (player.MFBought[8] >= 30) {
       target = getRandomInt(0,6)
       target2 = getRandomInt(0,6)
       while (target2 == target) {
