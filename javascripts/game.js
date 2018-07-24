@@ -152,6 +152,8 @@ function gameTick() {
       word[target] = String.fromCharCode(getRandomInt(33,127))
       word[target2] = String.fromCharCode(getRandomInt(33,127))
       document.getElementById("errorText").innerHTML = "500 Server " + word.join("")
+    } else {
+      document.getElementById("errorText").innerHTML = "500 Server Error"
     }
   }
   player.time = new Date().getTime()
