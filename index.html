@@ -9,14 +9,14 @@
 <body onload="gameStart()">
 <h1>Error Loading Title</h1>
 <p>You have <span id="bugs">10</span> Bug(s)</p>
-<p>Buy Bare Misfunction (you have <span id="mf1Amount">0</span> of them, making <span id="mf1BPS">0</span> bug(s) per second)- <button onclick="buyMF(1)" style="display: inline-block;"><span id="mf1Cost">10</span> Bugs</button></p>
-<p>Buy Tiny Misfunction (you have <span id="mf2Amount">0</span> of them)- <button onclick="buyMF(2)" style="display: inline-block;"><span id="mf2Cost">100</span> Bugs</button></p>
-<p>Buy Small Misfunction (you have <span id="mf3Amount">0</span> of them)- <button onclick="buyMF(3)" style="display: inline-block;"><span id="mf3Cost">1e3</span> Bugs</button></p>
-<p>Buy Regular Misfunction (you have <span id="mf4Amount">0</span> of them)- <button onclick="buyMF(4)" style="display: inline-block;"><span id="mf4Cost">1e4</span> Bugs</button></p>
-<p><div id="mf5" style="display: none">Buy Large Misfunctions (you have <span id="mf5Amount">0</span> of them)- <button onclick="buyMF(5)" style="display: inline-block;"><span id="mf5Cost">1e5</span> Bugs</button></div></p>
-<p><div id="mf6" style="display: none">Buy Huge Misfunctions (you have <span id="mf6Amount">0</span> of them)- <button onclick="buyMF(6)" style="display: inline-block;"><span id="mf6Cost">1e6</span> Bugs</button></div></p>
-<p><div id="mf7" style="display: none">Buy Corrupted Files (you have <span id="mf7Amount">0</span> of them)- <button onclick="buyMF(7)" style="display: inline-block;"><span id="mf7Cost">1e7</span> Bugs</button></div></p>
-<p><div id="mf8" style="display: none">Buy Corrupted Programs (you have <span id="mf8Amount">0</span> of them)- <button onclick="buyMF(8)" style="display: inline-block;"><span id="mf8Cost">1e8</span> Bugs</button></div></p>
+  <p>Buy Bare Misfunction (you have <span id="mf1Amount">0</span> of them, making <span id="mf1BPS">0</span> bug(s) per second)- <button onclick="buyMF(1)" style="display: inline-block;"><span id="mf1Cost"></span> Bugs</button><button onclick=buy10(1)>Buy till 10: <span id="mf1Cost2"></span> Bugs</button></p>
+<p>Buy Tiny Misfunction (you have <span id="mf2Amount">0</span> of them)- <button onclick="buyMF(2)" style="display: inline-block;"><span id="mf2Cost"></span> Bugs</button><button onclick=buy10(2)>Buy till 10: <span id="mf2Cost2"></span> Bugs</button></p>
+<p>Buy Small Misfunction (you have <span id="mf3Amount">0</span> of them)- <button onclick="buyMF(3)" style="display: inline-block;"><span id="mf3Cost"></span> Bugs</button><button onclick=buy10(3)>Buy till 10: <span id="mf3Cost2"></span> Bugs</button></p>
+<p>Buy Regular Misfunction (you have <span id="mf4Amount">0</span> of them)- <button onclick="buyMF(4)" style="display: inline-block;"><span id="mf4Cost"></span> Bugs</button><button onclick=buy10(4)>Buy till 10: <span id="mf4Cost2"></span> Bugs</button></p>
+<div id="mf5" style="display: none">Buy Large Misfunctions (you have <span id="mf5Amount">0</span> of them)- <button onclick="buyMF(5)" style="display: inline-block;"><span id="mf5Cost"></span> Bugs</button><button onclick=buy10(5)>Buy till 10: <span id="mf5Cost2"></span> Bugs</button></div>
+<div id="mf6" style="display: none">Buy Huge Misfunctions (you have <span id="mf6Amount">0</span> of them)- <button onclick="buyMF(6)" style="display: inline-block;"><span id="mf6Cost"></span> Bugs</button><button onclick=buy10(6)>Buy till 10: <span id="mf6Cost2"></span> Bugs</button></div>
+<div id="mf7" style="display: none">Buy Corrupted Files (you have <span id="mf7Amount">0</span> of them)- <button onclick="buyMF(7)" style="display: inline-block;"><span id="mf7Cost"></span> Bugs</button><button onclick=buy10(7)>Buy till 10: <span id="mf7Cost2"></span> Bugs</button></div>
+<div id="mf8" style="display: none">Buy Corrupted Programs (you have <span id="mf8Amount">0</span> of them)- <button onclick="buyMF(8)" style="display: inline-block;"><span id="mf8Cost"></span> Bugs</button><button onclick=buy10(8)>Buy till 10: <span id="mf8Cost2"></span> Bugs</button></div>
 <div id="CE">
 <div>Critical Error</div>
 <button id="CEReq" onclick="doCE()">10 Error Generators bought</button>

@@ -100,12 +100,24 @@ function getInitPlayer() {
   return strToDec(JSON.parse(JSON.stringify(initPlayer)))
 }
 
+function buy10(tier) {
+  buy10Cost = player.MFCost[tier]*(10-(player.MFBought[tier] % 10))
+  if (player.bugs.lt(buy10Cost)) return false
+  player.bugs = player.bugs.sub(buy10Cost)
+  player.MFAmount[tier] = player.MFAmount[tier].add(10-(player.MFBought[tier] % 10))
+  player.MFBought[tier] += 10-(player.MFBought[tier] % 10)
+  player.MFCost[tier] = player.MFCost[tier].times(player.MFCostIncRate[tier])
+  player.MFBoost[tier] = player.MFBoost[tier].times(new Decimal(2))
+  return true
+}
+
 function gameTick() {
   for (i=1;i<9;i++) {
     if (i>1) player.MFAmount[i-1] = player.MFAmount[i-1].add(player.MFAmount[i].mul(player.MFBoost[i]).mul(player.CE >= i?2:1).div(20))
-    document.getElementById("mf" + i.toString() + "Amount").innerHTML = Decimal.floor(player.MFAmount[i]).eq(player.MFBought[i])?format(player.MFAmount[i]):format(player.MFAmount[i])+"("+player.MFBought[i].toString()+")"
+    document.getElementById("mf" + i.toString() + "Amount").innerHTML = Decimal.floor(player.MFAmount[i]).eq(player.MFBought[i])?format(player.MFAmount[i]):format(player.MFAmount[i])+"("+(player.MFBought[i] % 10).toString()+")"
     document.getElementById("mf" + i.toString() + "Cost").innerHTML = format(player.MFCost[i])
     if (i<5) document.getElementById("mf" + (i+4).toString()).style = "display: " + (player.CE>=i?"block":"none")
+    document.getElementById("mf" + i.toString() + "Cost2").innerHTML = format(player.MFCost[i]*(10-(player.MFBought[i] % 10)))
   }
   document.getElementById("mf1BPS").innerHTML = format(Decimal.floor(player.MFAmount[1]).times(player.MFBoost[1]).times(player.CE >= 1?2:1))
   player.bugs = player.bugs.add(Decimal.floor(player.MFAmount[1]).times(player.MFBoost[1]).times(player.CE >= 1?2:1).div(10))
