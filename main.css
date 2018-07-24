@@ -13,7 +13,7 @@
   font-weight: normal;
   font-style: normal;
 }
-.button {
+button {
     background-color: #4CAF50; /* Green */
     border: none;
     color: white;
