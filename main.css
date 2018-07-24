@@ -6,6 +6,14 @@
     url("fonts/forced_square-webfont.ttf") format("truetype"),
     url("fonts/forced_square-webfont.woff") format("woff");
 }
+@font-face {
+  font-family: AsgaltRegular;
+  src: url("fonts/asgalt-regular-webfont.eot");
+  src:
+    url("fonts/asgalt-regular-webfont.svg") format("svg"),
+    url("fonts/asgalt-regular-webfont.ttf") format("truetype"),
+    url("fonts/asgalt-regular-webfont.woff") format("woff");
+}
 * {
   background-color: black;
   color: white;
@@ -27,4 +35,9 @@ button {
 .cost {
     background-color: lightgray;
     color: black;
+}
+h1 {
+  font-family: AsgaltRegular;
+  font-weight: normal;
+  font-style: normal;
 }
