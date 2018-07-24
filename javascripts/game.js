@@ -66,6 +66,10 @@ function load() {
   } catch(error) {
     player = getInitPlayer()
   }
+  if (player.version < 2) {
+    player.time = 0
+  }
+  player.version = getInitPlayer().version
 }
 
 function strToDec(inp) {
@@ -95,7 +99,8 @@ function getInitPlayer() {
     MFCostIncRate: [null,new Decimal(1e4),new Decimal(1e4),new Decimal(1e5),new Decimal(1e6),new Decimal(1e6),new Decimal(1e7),new Decimal(1e7),new Decimal(1e8)],
     MFBought: [null,0,0,0,0,0,0,0,0],
     CE: 0,
-    version: 1
+    version: 2,
+    time: 0
   }
   return strToDec(JSON.parse(JSON.stringify(initPlayer)))
 }
@@ -112,35 +117,39 @@ function buy10(tier) {
 }
 
 function gameTick() {
-  for (i=1;i<9;i++) {
-    if (i>1) player.MFAmount[i-1] = player.MFAmount[i-1].add(player.MFAmount[i].mul(player.MFBoost[i]).mul(player.CE >= i?2:1).div(20))
-    document.getElementById("mf" + i.toString() + "Amount").innerHTML = Decimal.floor(player.MFAmount[i]).eq(player.MFBought[i])?format(player.MFAmount[i]):format(player.MFAmount[i])+"("+(player.MFBought[i] % 10).toString()+")"
-    document.getElementById("mf" + i.toString() + "Cost").innerHTML = format(player.MFCost[i])
-    if (i<5) document.getElementById("mf" + (i+4).toString()).style = "display: " + (player.CE>=i?"block":"none")
-    document.getElementById("mf" + i.toString() + "Cost2").innerHTML = format(player.MFCost[i]*(10-(player.MFBought[i] % 10)))
-  }
-  document.getElementById("mf1BPS").innerHTML = format(Decimal.floor(player.MFAmount[1]).times(player.MFBoost[1]).times(player.CE >= 1?2:1))
-  player.bugs = player.bugs.add(Decimal.floor(player.MFAmount[1]).times(player.MFBoost[1]).times(player.CE >= 1?2:1).div(10))
-  document.getElementById("bugs").innerHTML = format(player.bugs)
-  if (player.CE == 4) document.getElementById("CE").style = "display: none"
-  else document.getElementById("CE").style = "display: block"
-  document.getElementById("CEReq").innerHTML = "10 " + MFNames[player.CE+4] + " Bought"
-  document.getElementById("CEUnlocks").innerHTML = MFNames[player.CE+5]
-  if (player.MFBought[8] >= 40) {
-    target = getRandomInt(0,6)
-    target2 = getRandomInt(0,6)
-    while (target2 == target) {
-      target2 = getRandomInt(0,6)
+  if (player.time > 0) {
+    s=(new Date().getTime()-player.time)/1000
+    for (i=1;i<9;i++) {
+      if (i>1) player.MFAmount[i-1] = player.MFAmount[i-1].add(player.MFAmount[i].mul(player.MFBoost[i]).mul(player.CE >= i?2:1).div(2).times(s))
+      document.getElementById("mf" + i.toString() + "Amount").innerHTML = Decimal.floor(player.MFAmount[i]).eq(player.MFBought[i])?format(player.MFAmount[i]):format(player.MFAmount[i])+"("+(player.MFBought[i] % 10).toString()+")"
+      document.getElementById("mf" + i.toString() + "Cost").innerHTML = format(player.MFCost[i])
+      if (i<5) document.getElementById("mf" + (i+4).toString()).style = "display: " + (player.CE>=i?"block":"none")
+      document.getElementById("mf" + i.toString() + "Cost2").innerHTML = format(player.MFCost[i]*(10-(player.MFBought[i] % 10)))
     }
-    word = ["E","r","r","o","r"]
-    word[target] = String.fromCharCode(getRandomInt(33,127))
-    word[target2] = String.fromCharCode(getRandomInt(33,127))
-    document.getElementById("errorText").innerHTML = "500 Server " + word.join("")
+    document.getElementById("mf1BPS").innerHTML = format(Decimal.floor(player.MFAmount[1]).times(player.MFBoost[1]).times(player.CE >= 1?2:1))
+    player.bugs = player.bugs.add(Decimal.floor(player.MFAmount[1]).times(player.MFBoost[1]).times(player.CE >= 1?2:1).times(s))
+    document.getElementById("bugs").innerHTML = format(player.bugs)
+    if (player.CE == 4) document.getElementById("CE").style = "display: none"
+    else document.getElementById("CE").style = "display: block"
+    document.getElementById("CEReq").innerHTML = "10 " + MFNames[player.CE+4] + " Bought"
+    document.getElementById("CEUnlocks").innerHTML = MFNames[player.CE+5]
+    if (player.MFBought[8] >= 40) {
+      target = getRandomInt(0,6)
+      target2 = getRandomInt(0,6)
+      while (target2 == target) {
+        target2 = getRandomInt(0,6)
+      }
+      word = ["E","r","r","o","r"]
+      word[target] = String.fromCharCode(getRandomInt(33,127))
+      word[target2] = String.fromCharCode(getRandomInt(33,127))
+      document.getElementById("errorText").innerHTML = "500 Server " + word.join("")
+    }
   }
+  player.time = new Date().getTime()
 }
 
 function gameStart() {
   load()
-  gameInterval = setInterval(gameTick,100)
+  gameInterval = setInterval(gameTick,0)
   autoSave = setInterval(save,1000)
 }
