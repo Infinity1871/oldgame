@@ -126,8 +126,9 @@ function maxAll() {
 }
 
 function gameTick() {
+  s=(new Date().getTime()-player.time)/1000
   if (player.time > 0) {
-    s=(new Date().getTime()-player.time)/1000
+    player.time = new Date().getTime()
     for (i=1;i<9;i++) {
       if (i>1) player.MFAmount[i-1] = player.MFAmount[i-1].add(player.MFAmount[i].mul(player.MFBoost[i]).mul(player.CE >= i?2:1).div(2).times(s))
       document.getElementById("mf" + i.toString() + "Amount").innerHTML = Decimal.floor(player.MFAmount[i]).eq(player.MFBought[i])?format(player.MFAmount[i]):format(player.MFAmount[i])+"("+(player.MFBought[i] % 10).toString()+")"
@@ -155,8 +156,7 @@ function gameTick() {
     } else {
       document.getElementById("errorText").innerHTML = "500 Server Error"
     }
-  }
-  player.time = new Date().getTime()
+  } else player.time = new Date().getTime()
 }
 
 function gameStart() {
