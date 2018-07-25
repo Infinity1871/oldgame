@@ -132,7 +132,7 @@ function gameTick() {
     for (i=1;i<9;i++) {
       if (i>1) {
         player.MFAmount[i-1] = player.MFAmount[i-1].add(Decimal.floor(player.MFAmount[i]).mul(player.MFBoost[i]).mul(player.CE >= i?2:1).div(2).times(s))
-	// document.getElementById(”mf”+i.toString+”MPS”).innerHTML = format(Decimal.floor(player.MFAmount[i]).mul(player.MFBoost[i]).mul(player.CE >= i?2:1).div(2),1)
+	document.getElementById(”MPS”+i.toString()).innerHTML = format(Decimal.floor(player.MFAmount[i]).mul(player.MFBoost[i]).mul(player.CE >= i?2:1).div(2),1)
       }
       document.getElementById("mf" + i.toString() + "Amount").innerHTML = Decimal.floor(player.MFAmount[i]).eq(player.MFBought[i])?format(player.MFAmount[i]):format(player.MFAmount[i])+"("+(player.MFBought[i] % 10).toString()+")"
       document.getElementById("mf" + i.toString() + "Cost").innerHTML = format(player.MFCost[i])
