@@ -166,5 +166,5 @@ function gameStart() {
   load()
   gameInterval = setInterval(gameTick,0)
   autoSave = setInterval(save,1000)
-  document.getElementById("jsCheck).style = "display: none"
+  document.getElementById("jsCheck").style = "display: none"
 }
