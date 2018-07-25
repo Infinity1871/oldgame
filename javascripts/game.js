@@ -11,7 +11,7 @@ function format(num,decimalPoints=0,offset=0,rounded=true) {
   } else if (num.gte(1/0)) {
     return 'Infinite'
   } else if (num.lt(999.5)) {
-    return Math.round(num.toNumber())
+    return num.toNumber().toFixed(decimalPoints)
   } else {
     var abbid=Math.max(Math.floor(num.e/3)-offset,0)
     var mantissa=num.div(Decimal.pow(1000,abbid)).toFixed((abbid>0&&decimalPoints<2)?2:decimalPoints)
@@ -130,13 +130,16 @@ function gameTick() {
   if (player.time > 0) {
     player.time = new Date().getTime()
     for (i=1;i<9;i++) {
-      if (i>1) player.MFAmount[i-1] = player.MFAmount[i-1].add(player.MFAmount[i].mul(player.MFBoost[i]).mul(player.CE >= i?2:1).div(2).times(s))
+      if (i>1) {
+        player.MFAmount[i-1] = player.MFAmount[i-1].add(Decimal.floor(player.MFAmount[i]).mul(player.MFBoost[i]).mul(player.CE >= i?2:1).div(2).times(s))
+	// document.getElementById(”mf”+i.toString+”MPS”).innerHTML = format(Decimal.floor(player.MFAmount[i]).mul(player.MFBoost[i]).mul(player.CE >= i?2:1).div(2),1)
+      }
       document.getElementById("mf" + i.toString() + "Amount").innerHTML = Decimal.floor(player.MFAmount[i]).eq(player.MFBought[i])?format(player.MFAmount[i]):format(player.MFAmount[i])+"("+(player.MFBought[i] % 10).toString()+")"
       document.getElementById("mf" + i.toString() + "Cost").innerHTML = format(player.MFCost[i])
       if (i<5) document.getElementById("mf" + (i+4).toString()).style = "display: " + (player.CE>=i?"block":"none")
       document.getElementById("mf" + i.toString() + "Cost2").innerHTML = format(player.MFCost[i]*(10-(player.MFBought[i] % 10)))
     }
-    document.getElementById("mf1BPS").innerHTML = format(Decimal.floor(player.MFAmount[1]).times(player.MFBoost[1]).times(player.CE >= 1?2:1))
+    document.getElementById("BPS").innerHTML = format(Decimal.floor(player.MFAmount[1]).times(player.MFBoost[1]).times(player.CE >= 1?2:1))
     player.bugs = player.bugs.add(Decimal.floor(player.MFAmount[1]).times(player.MFBoost[1]).times(player.CE >= 1?2:1).times(s))
     document.getElementById("bugs").innerHTML = format(player.bugs)
     if (player.CE == 4) document.getElementById("CE").style = "display: none"
