@@ -11,7 +11,7 @@ function format(num,decimalPoints=0,offset=0,rounded=true) {
   } else if (num.gte(1/0)) {
     return 'Infinite'
   } else if (num.lt(999.5)) {
-    return num.toNumber().toFixed(decimalPoints)
+    return num.toNumber().toFixed(decimalPoints).replace("."+"0".repeat(decimalPoints),"")
   } else {
     var abbid=Math.max(Math.floor(num.e/3)-offset,0)
     var mantissa=num.div(Decimal.pow(1000,abbid)).toFixed((abbid>0&&decimalPoints<2)?2:decimalPoints)
