@@ -134,7 +134,7 @@ function gameTick() {
         player.MFAmount[i-1] = player.MFAmount[i-1].add(Decimal.floor(player.MFAmount[i]).mul(player.MFBoost[i]).mul(player.CE >= i?2:1).div(2).times(s))
 	document.getElementById("MPS"+i.toString()).innerHTML = format(Decimal.floor(player.MFAmount[i]).mul(player.MFBoost[i]).mul(player.CE >= i?2:1).div(2),1)
       }
-      document.getElementById("mf" + i.toString() + "Amount").innerHTML = Decimal.floor(player.MFAmount[i]).eq(player.MFBought[i])?format(player.MFAmount[i]):format(player.MFAmount[i])+"("+(player.MFBought[i] % 10).toString()+")"
+      document.getElementById("mf" + i.toString() + "Amount").innerHTML = Decimal.floor(player.MFAmount[i]).eq(player.MFBought[i])?format(player.MFAmount[i]):format(Decimal.floor(player.MFAmount[i]))+"("+(player.MFBought[i] % 10).toString()+")"
       document.getElementById("mf" + i.toString() + "Cost").innerHTML = format(player.MFCost[i])
       if (i<5) document.getElementById("mf" + (i+4).toString()).style = "display: " + (player.CE>=i?"block":"none")
       document.getElementById("mf" + i.toString() + "Cost2").innerHTML = format(player.MFCost[i]*(10-(player.MFBought[i] % 10)))
